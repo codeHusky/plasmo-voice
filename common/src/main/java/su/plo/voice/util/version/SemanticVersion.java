@@ -95,7 +95,7 @@ public final class SemanticVersion {
     }
 
     public enum Branch {
-
+        HUSKYMOMENT,
         RELEASE,
         ALPHA
     }

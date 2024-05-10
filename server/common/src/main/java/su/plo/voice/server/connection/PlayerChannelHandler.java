@@ -1,6 +1,10 @@
 package su.plo.voice.server.connection;
 
 import org.jetbrains.annotations.NotNull;
+import su.plo.lib.api.chat.MinecraftTextClickEvent;
+import su.plo.lib.api.chat.MinecraftTextComponent;
+import su.plo.lib.api.chat.MinecraftTextHoverEvent;
+import su.plo.lib.api.chat.MinecraftTextStyle;
 import su.plo.voice.BaseVoice;
 import su.plo.voice.api.server.PlasmoVoiceServer;
 import su.plo.voice.api.server.audio.capture.ServerActivation;
@@ -61,6 +65,12 @@ public final class PlayerChannelHandler implements ServerPacketTcpHandler {
                         clientVersion.major() != serverVersion.major()
         ) {
             ServerVersionUtil.suggestSupportedVersion(player, serverVersion, packet.getMinecraftVersion());
+            return;
+        }
+
+        if(!serverVersion.branch().equals(clientVersion.branch())){
+            player.getInstance().kick(MinecraftTextComponent.literal(
+                    "Incorrect version of Plasmo - use the version from the HuskyMoment Discord."));
             return;
         }
 
