@@ -35,7 +35,7 @@ subprojects {
     group = mavenGroup
 
     if (buildVersion.contains("+") && !project.parent?.name.equals("api")) {
-        val gitCommitHash: String = ByteArrayOutputStream().use { outputStream ->
+        var gitCommitHash: String = ByteArrayOutputStream().use { outputStream ->
             rootProject.exec {
                 commandLine("git")
                     .args("rev-parse", "--verify", "--short", "HEAD")
@@ -43,6 +43,9 @@ subprojects {
             }
             outputStream.toString().trim()
         }.substring(0, 7) // windows moment?
+        if(buildVersion.endsWith("HUSKYMOMENT")){
+            gitCommitHash = "HUSKYMOMENT";
+        }
         version = "${buildVersion.split("+")[0]}+$gitCommitHash"
     } else {
         version = buildVersion

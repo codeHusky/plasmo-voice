@@ -59,6 +59,12 @@ public final class PlayerChannelHandler implements ServerPacketTcpHandler {
     public void handle(@NotNull PlayerInfoPacket packet) {
         SemanticVersion serverVersion = SemanticVersion.parse(voiceServer.getVersion());
         SemanticVersion clientVersion = SemanticVersion.parse(packet.getVersion());
+        BaseVoice.LOGGER.warn(serverVersion.prettyString() + " VS " + clientVersion.prettyString());
+        if(!serverVersion.branch().equals(clientVersion.branch())){
+            player.getInstance().kick(MinecraftTextComponent.literal(
+                    "Incorrect version of Plasmo - use the version from the HuskyMoment Discord."));
+            return;
+        }
 
         if (
                 (System.getProperty("plasmovoice.alpha.disableversioncheck") == null && !serverVersion.isRelease() && !serverVersion.string().equals(clientVersion.string())) || // alpha check
@@ -68,11 +74,7 @@ public final class PlayerChannelHandler implements ServerPacketTcpHandler {
             return;
         }
 
-        if(!serverVersion.branch().equals(clientVersion.branch())){
-            player.getInstance().kick(MinecraftTextComponent.literal(
-                    "Incorrect version of Plasmo - use the version from the HuskyMoment Discord."));
-            return;
-        }
+
 
         BaseVoicePlayer<?> voicePlayer = (BaseVoicePlayer<?>) player;
         try {

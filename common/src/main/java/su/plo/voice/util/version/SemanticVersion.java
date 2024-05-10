@@ -39,7 +39,7 @@ public final class SemanticVersion {
                 major,
                 minor,
                 patch,
-                strVersion.contains("+")
+                strVersion.endsWith("HUSKYMOMENT")? Branch.HUSKYMOMENT:strVersion.contains("+")
                         ? SemanticVersion.Branch.ALPHA
                         : SemanticVersion.Branch.RELEASE
         );
