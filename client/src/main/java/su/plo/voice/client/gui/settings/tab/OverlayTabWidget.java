@@ -76,16 +76,17 @@ public final class OverlayTabWidget extends TabWidget {
                 config.getOverlay().getShowStaticSourceIcons()
         ));
 
-        addEntry(new CategoryEntry(MinecraftTextComponent.translatable("gui.plasmovoice.overlay")));
-        addEntry(createToggleEntry(
-                MinecraftTextComponent.translatable("gui.plasmovoice.overlay.enable"),
-                null,
-                config.getOverlay().getOverlayEnabled()
-        ));
-        addEntry(createOverlayPosition());
-        addEntry(createOverlayStyle());
+//        addEntry(new CategoryEntry(MinecraftTextComponent.translatable("gui.plasmovoice.overlay")));
+        config.getOverlay().getOverlayEnabled().set(false);
+//        addEntry(createToggleEntry(
+//                MinecraftTextComponent.translatable("gui.plasmovoice.overlay.enable"),
+//                null,
+//                config.getOverlay().getOverlayEnabled()
+//        ));
+//        addEntry(createOverlayPosition());
+//        addEntry(createOverlayStyle());
 
-        addEntry(new CategoryEntry(MinecraftTextComponent.translatable("gui.plasmovoice.overlay.sources")));
+//        addEntry(new CategoryEntry(MinecraftTextComponent.translatable("gui.plasmovoice.overlay.sources")));
 
         List<ClientSourceLine> sourceLines = Lists.newArrayList(this.sourceLines.getLines());
         Collections.reverse(sourceLines);
@@ -96,6 +97,7 @@ public final class OverlayTabWidget extends TabWidget {
         EnumConfigEntry<OverlaySourceState> configEntry = config.getOverlay().getSourceStates().getState(sourceLine);
 
         if (!sourceLine.hasPlayers()) {
+            configEntry.set(OverlaySourceState.OFF);
             OverlaySourceStateButton widget = new OverlaySourceStateButton(
                     configEntry,
                     0,
@@ -104,15 +106,16 @@ public final class OverlayTabWidget extends TabWidget {
                     20
             );
 
-            addEntry(new OverlaySourceEntry<>(
-                    MinecraftTextComponent.translatable(sourceLine.getTranslation()),
-                    widget,
-                    configEntry,
-                    null,
-                    new ResourceLocation(sourceLine.getIcon()),
-                    null
-            ));
+//            addEntry(new OverlaySourceEntry<>(
+//                    MinecraftTextComponent.translatable(sourceLine.getTranslation()),
+//                    widget,
+//                    configEntry,
+//                    null,
+//                    new ResourceLocation(sourceLine.getIcon()),
+//                    null
+//            ));
         } else {
+            configEntry.set(OverlaySourceState.NEVER);
             DropDownWidget widget = new DropDownWidget(
                     parent,
                     0,
@@ -137,14 +140,14 @@ public final class OverlayTabWidget extends TabWidget {
                     }
             );
 
-            addEntry(new OverlaySourceEntry<>(
-                    MinecraftTextComponent.translatable(sourceLine.getTranslation()),
-                    widget,
-                    configEntry,
-                    null,
-                    new ResourceLocation(sourceLine.getIcon()),
-                    (button, element) -> element.setText(OVERLAY_DISPLAYS.get(0))
-            ));
+//            addEntry(new OverlaySourceEntry<>(
+//                    MinecraftTextComponent.translatable(sourceLine.getTranslation()),
+//                    widget,
+//                    configEntry,
+//                    null,
+//                    new ResourceLocation(sourceLine.getIcon()),
+//                    (button, element) -> element.setText(OVERLAY_DISPLAYS.get(0))
+//            ));
         }
     }
 
